@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, ButtonHTMLAttributes } from 'react';
 import styled from 'styled-components';
 
 const StyledButton = styled.button.attrs(
@@ -10,11 +10,19 @@ const StyledButton = styled.button.attrs(
 )<{ variant: ButtonVariants }>``;
 
 type ButtonVariants = 'default' | 'warning';
-export interface ButtonProps {
+export interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   text: string;
   variant?: ButtonVariants;
 }
 
-export const Button: FC<ButtonProps> = ({ text, variant = 'default' }) => {
-  return <StyledButton variant={variant}>{text}</StyledButton>;
+export const Button: FC<ButtonProps> = ({
+  text,
+  variant = 'default',
+  ...rest
+}) => {
+  return (
+    <StyledButton variant={variant} {...rest}>
+      {text}
+    </StyledButton>
+  );
 };
